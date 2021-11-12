@@ -75,7 +75,10 @@ export default function App() {
         <legend>Output</legend>
         <div className="field">
           <label>Battery Life</label>
-          <input disabled value={batteryLifeHuman} />
+          <div className="figure-wrapper">
+            <input disabled value={batteryLifeHuman} />
+            <figure>T = Pt / P</figure>
+          </div>
         </div>
       </fieldset>
     </main>
