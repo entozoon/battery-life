@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.scss";
 const simplifyFloat = (x) => parseFloat(x.toFixed(2));
-export default () => {
+export default App = () => {
   const useInput = ({ label, placeholder }) => {
     const [value, setValue] = useState("");
     const input = (

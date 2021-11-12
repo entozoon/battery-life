@@ -42,7 +42,7 @@ fieldset {
     // filter: sepia(100%) saturate(200%) brightness(70%) hue-rotate(330deg);
     filter: hue-rotate(-120deg);
     input {
-      filter: hue-rotate(-240deg);
+      filter: hue-rotate(-20deg) brightness(120%);
     }
   }
 }
@@ -83,6 +83,7 @@ input {
     color: Black;
     background: lighten($brand-2, 20%);
     border-color: $brand-2;
+    filter: sepia(100%);
     color: black;
   }
   &:focus {
