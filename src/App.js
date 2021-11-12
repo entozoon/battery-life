@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.scss";
 const simplifyFloat = (x) => parseFloat(x.toFixed(2));
 export default function App() {
-  const useInput = ({ label, placeholder }) => {
-    const [value, setValue] = useState("");
+  const useInput = ({ label, defaultValue = "", placeholder }) => {
+    const [value, setValue] = useState(defaultValue);
     const input = (
       <div className="field">
         <label>{label}</label>
@@ -32,8 +32,14 @@ export default function App() {
     label: "Current (A)",
     placeholder: "e.g. 0.5",
   });
+  const [deviceEfficiency, deviceEfficiencyInput] = useInput({
+    label: "Efficiency (%)",
+    placeholder: "e.g. 80",
+    defaultValue: 80,
+  });
   const batteryWattHours = batteryVoltage * batteryAh || 0;
-  const deviceWatts = deviceVoltage * deviceAmps || 0;
+  const deviceWatts =
+    deviceVoltage * deviceAmps * (deviceEfficiency / 100) || 0;
   const batteryLife = batteryWattHours / deviceWatts || 0;
   const batteryLifeHuman =
     batteryLife < 1 / 60
@@ -62,11 +68,12 @@ export default function App() {
           <legend>Device</legend>
           {deviceVoltageInput}
           {deviceAmpsInput}
+          {deviceEfficiencyInput}
           <div className="field">
             <label>Power (W)</label>
             <div className="figure-wrapper">
               <input disabled value={simplifyFloat(deviceWatts)} />
-              <figure>P = V * I</figure>
+              <figure>P = (V * I) / Efficiency</figure>
             </div>
           </div>
         </fieldset>
