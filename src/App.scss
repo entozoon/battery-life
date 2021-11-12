@@ -1,0 +1,122 @@
+$brand-1: #522;
+$brand-2: #34686e;
+$brand-3: #3b2255;
+$breakpoint: 1200px;
+body {
+  font-family: verdana, tahoma;
+  font-size: 20px;
+  margin: 0.5em;
+  background: black;
+}
+main {
+  max-width: 1600px;
+  margin: auto;
+}
+form {
+  @media (min-width: $breakpoint) {
+    display: flex;
+    justify-content: center;
+  }
+}
+* {
+  color: lighten($brand-1, 40%);
+  font-size: inherit;
+}
+fieldset {
+  position: relative;
+  padding: 4em 2em 2em;
+  max-width: 30em;
+  margin: 0.5em auto;
+  border: 0;
+  background: darken($brand-1, 2%);
+  border: 10px outset lighten($brand-1, 15%);
+  @media (min-width: $breakpoint) {
+    width: 50%;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+  &.output {
+    margin-left: auto;
+    margin-right: auto;
+    // background: darken($brand-3, 0%);
+    // filter: sepia(100%) saturate(200%) brightness(70%) hue-rotate(330deg);
+    filter: hue-rotate(-120deg);
+    input {
+      filter: hue-rotate(-240deg);
+    }
+  }
+}
+legend,
+label {
+  text-shadow: 0 0 1px darken($brand-1, 20%), 0 0 2px darken($brand-1, 20%);
+}
+legend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  line-height: 1;
+  text-align: center;
+  background: none;
+  color: lighten($brand-1, 20%);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.field {
+  display: block;
+  margin: 0 0 1em;
+}
+label {
+  display: block;
+  margin: 0 0 0.5em;
+  background: none;
+}
+input {
+  padding: 1em;
+  border: 10px inset lighten($brand-1, 10%);
+  background: black;
+  color: white;
+  font-weight: bold;
+  &[disabled] {
+    // background: #111;
+    border-style: outset;
+    color: Black;
+    background: lighten($brand-2, 20%);
+    border-color: $brand-2;
+    color: black;
+  }
+  &:focus {
+    outline: none;
+    // background: #111;
+    // border-style: outset;
+    border-color: lighten($brand-1, 5%);
+    background: darken($brand-1, 10%);
+  }
+}
+.figure-wrapper {
+  @media (min-width: 800px) {
+    display: flex;
+  }
+  justify-content: flex-start;
+  align-items: center;
+}
+figure {
+  flex-grow: 1;
+  max-width: 14em;
+  margin: 0.5em;
+  font-size: 1.2em;
+  padding: 0 1em;
+  text-align: right;
+  $hatch: 0.1em;
+  // border-radius: 0 3em 0 0 0 0 0 0;
+  // border-top-left-radius: 1em 3em;
+  // clip: polygon(2em 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+  clip-path: polygon(100% 0%, 100% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+  background: repeating-linear-gradient(
+    -60deg,
+    transparent,
+    transparent $hatch,
+    rgba(white, 0.1) $hatch,
+    rgba(white, 0.1) $hatch * 2
+  );
+}
