@@ -15,31 +15,30 @@ const useInput = ({ label, defaultValue = "", placeholder }) => {
       </div>
     </div>
   );
-  return [value, setValue, input];
+  return [input, value, setValue];
 };
 export default function App() {
-  const [batteryVoltage, setBatteryVoltage, batteryVoltageInput] = useInput({
+  const [batteryVoltageInput, batteryVoltage, setBatteryVoltage] = useInput({
     label: "Voltage (V)",
     placeholder: "3.7",
   });
-  const [batteryAh, setBatteryAh, batteryAhInput] = useInput({
+  const [batteryAhInput, batteryAh, setBatteryAh] = useInput({
     label: "Current/time (Ah)",
     placeholder: "2.5",
   });
-  const [deviceVoltage, setDeviceVoltage, deviceVoltageInput] = useInput({
+  const [deviceVoltageInput, deviceVoltage, setDeviceVoltage] = useInput({
     label: "Voltage (V)",
     placeholder: "5",
   });
-  const [deviceAmps, setDeviceAmps, deviceAmpsInput] = useInput({
+  const [deviceAmpsInput, deviceAmps, setDeviceAmps] = useInput({
     label: "Current (A)",
     placeholder: "0.5",
   });
-  const [deviceEfficiency, setDeviceEfficiency, deviceEfficiencyInput] =
-    useInput({
-      label: "Efficiency (%)",
-      placeholder: "80",
-      defaultValue: 80,
-    });
+  const [deviceEfficiencyInput, deviceEfficiency] = useInput({
+    label: "Efficiency (%)",
+    placeholder: "80",
+    defaultValue: 80,
+  });
   const batteryWattHours = batteryVoltage * batteryAh || 0;
   const deviceWatts =
     deviceVoltage * deviceAmps * (deviceEfficiency / 100) || 0;
