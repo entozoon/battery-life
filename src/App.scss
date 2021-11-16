@@ -41,6 +41,7 @@ fieldset {
     // background: darken($brand-3, 0%);
     // filter: sepia(100%) saturate(200%) brightness(70%) hue-rotate(330deg);
     filter: hue-rotate(-120deg);
+
     input {
       filter: hue-rotate(-20deg) brightness(120%);
     }
@@ -71,32 +72,65 @@ label {
   margin: 0 0 0.5em;
   background: none;
 }
-input {
-  padding: 1em;
+.input {
+  $p: 0.5em;
+  $color: orangered;
+  position: relative;
   border: 10px inset lighten($brand-1, 10%);
+  font-family: "dseg7_classicregular"; // .seg-14class available
+  min-width: 10em;
   background: black;
-  color: white;
-  font-weight: bold;
-  &[disabled] {
-    // background: #111;
-    border-style: outset;
-    color: Black;
-    background: lighten($brand-2, 20%);
-    border-color: $brand-2;
-    filter: sepia(100%);
-    color: black;
+  overflow: hidden;
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: $p;
+    display: inline;
+    content: "000000000000000000000000000000000000000";
+    color: rgba($color, 0.1);
+    font-family: inherit;
+    pointer-events: none;
   }
-  &:focus {
-    outline: none;
-    // background: #111;
-    // border-style: outset;
-    border-color: lighten($brand-1, 5%);
-    background: darken($brand-1, 10%);
+  input {
+    width: 100%;
+    padding: $p;
+    background: none;
+    color: $color;
+    font-weight: bold;
+    font-family: inherit;
+    border: 0;
+    &[disabled] {
+      // background: #111;
+      border-style: outset;
+      color: black;
+      background: lighten($brand-2, 20%);
+      border-color: $brand-2;
+      filter: sepia(100%);
+      color: black;
+    }
+    &:focus {
+      outline: none;
+      // background: #111;
+      // border-style: outset;
+      border-color: lighten($brand-1, 5%);
+      background: darken($brand-1, 10%);
+      &::placeholder {
+        color: transparent;
+      }
+    }
+    &::placeholder {
+      color: rgba($color, 0.2);
+    }
   }
+}
+.seg-14 {
+  font-family: "dseg14_classicregular" !important;
 }
 .figure-wrapper {
   @media (min-width: 800px) {
     display: flex;
+    // flex-flow: column;
   }
   justify-content: flex-start;
   align-items: center;
@@ -105,7 +139,6 @@ figure {
   flex-grow: 1;
   max-width: 14em;
   margin: 0.5em;
-  font-size: 1.2em;
   padding: 0 1em;
   text-align: right;
   $hatch: 0.1em;
@@ -120,4 +153,24 @@ figure {
     rgba(white, 0.1) $hatch,
     rgba(white, 0.1) $hatch * 2
   );
+}
+button {
+  cursor: pointer;
+  border: 10px outset lighten($brand-1, 15%);
+  transition: box-shadow 0.2s ease-out;
+  // background: none;
+  background: lighten($brand-1, 5%);
+  // background: linear-gradient(0deg, rgba(orange, 0.5) 30%, black 50%, black);
+  // background-clip: text;
+  // color: transparent;
+  font-weight: bold;
+  $color: darken($brand-1, 15%);
+  // Nice idea but just reduces legibility
+  // text-shadow: 0 -1px 0 #000, 0 -1px 0 #000, 0 -1px 0 #000,
+  //   0 1px 0 lighten($color, 20%);
+  color: $color;
+  &:hover {
+    // border-style: inset;
+    box-shadow: 0 0 1em lighten($brand-1, 5%);
+  }
 }
