@@ -1,16 +1,26 @@
 import { useState } from "react";
 import "./App.scss";
 const simplifyFloat = (x) => parseFloat(x.toFixed(2));
-const useInput = ({ label, defaultValue = "", placeholder }) => {
+const useInput = ({ label, defaultValue = "", placeholder, min, max }) => {
   const [value, setValue] = useState(defaultValue);
   const input = (
     <div className="field">
       <label>{label}</label>
       <div className="input">
         <input
+          type="number"
           value={value}
           placeholder={placeholder}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) =>
+            setValue(
+              e.target.value > max
+                ? max
+                : e.target.value < min
+                ? min
+                : e.target.value
+            )
+          }
+          {...{ min, max }}
         />
       </div>
     </div>
@@ -19,27 +29,42 @@ const useInput = ({ label, defaultValue = "", placeholder }) => {
 };
 export default function App() {
   const [batteryVoltageInput, batteryVoltage, setBatteryVoltage] = useInput({
-    label: "Voltage (V)",
+    label: "Voltage (Nominal) (V)",
     placeholder: "3.7",
+    min: 0,
   });
   const [batteryAhInput, batteryAh, setBatteryAh] = useInput({
     label: "Current/time (Ah)",
     placeholder: "2.5",
+    min: 0,
   });
+  const [batteryDischargeInput, batteryDischarge, setBatteryDischarge] =
+    useInput({
+      label: "Safe Discharge (%)",
+      placeholder: "20",
+      defaultValue: "20",
+      min: 0,
+      max: 100,
+    });
   const [deviceVoltageInput, deviceVoltage, setDeviceVoltage] = useInput({
     label: "Voltage (V)",
     placeholder: "5",
+    min: 0,
   });
   const [deviceAmpsInput, deviceAmps, setDeviceAmps] = useInput({
     label: "Current (A)",
     placeholder: "0.5",
+    min: 0,
   });
   const [deviceEfficiencyInput, deviceEfficiency] = useInput({
     label: "Efficiency (%)",
     placeholder: "80",
     defaultValue: 80,
+    min: 0,
+    max: 100,
   });
-  const batteryWattHours = batteryVoltage * batteryAh || 0;
+  const batteryWattHours =
+    (batteryVoltage * batteryAh * batteryDischarge) / 100 || 0;
   const deviceWatts =
     deviceVoltage * deviceAmps * (deviceEfficiency / 100) || 0;
   const batteryLife = batteryWattHours / deviceWatts || 0;
@@ -57,7 +82,6 @@ export default function App() {
   // TO DO:
   //
   // -  Add some default buttons like:
-  //   - Arduino / ESP / Pi
   //   - Battery types, serial / parallel
   //
   // - Output mA for everything next to it
@@ -79,32 +103,41 @@ export default function App() {
               onClick={(e) => {
                 e.preventDefault();
                 setBatteryVoltage(3.6);
-                setBatteryAh(2500);
+                setBatteryAh(2.5);
+                setBatteryDischarge(40);
               }}
             >
-              18650
+              18650 (4.2↓2.5v)
             </button>
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setBatteryVoltage(3.7);
-                setBatteryAh(500);
+                setBatteryAh(0.5);
+                setBatteryDischarge(28.5);
               }}
             >
-              LiPo Small
+              LiPo Small (4.2↓3v)
             </button>
             <button
               onClick={(e) => {
                 e.preventDefault();
                 setBatteryVoltage(3.7);
-                setBatteryAh(5000);
+                setBatteryAh(5.0);
+                setBatteryDischarge(28.5);
               }}
             >
-              LiPo Large
+              LiPo Large (4.2↓3v)
             </button>
+            <p>
+              NOTE: TP4056 discharge protection should not be relied on for
+              LiPo, as it cuts off real low at 2.4v. Li-ion is safer, but check
+              specs of any BMS.
+            </p>
           </div>
           {batteryVoltageInput}
           {batteryAhInput}
+          {batteryDischargeInput}
           <div className="field">
             <label>Power/time (Wh)</label>
             <div className="figure-wrapper">
@@ -113,7 +146,7 @@ export default function App() {
               </div>
               <figure>
                 {/* <div>Pt = V * It</div> */}
-                <div>Wh = V * Ah</div>
+                <div>Wh = V * Ah * Discharge</div>
               </figure>
             </div>
           </div>
@@ -153,10 +186,19 @@ export default function App() {
               onClick={(e) => {
                 e.preventDefault();
                 setDeviceVoltage(5.0);
-                setDeviceAmps(0.3);
+                setDeviceAmps(0.35);
               }}
             >
               Pi 3
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setDeviceVoltage(5.0);
+                setDeviceAmps(0.54);
+              }}
+            >
+              Pi 4
             </button>
           </div>
           {deviceVoltageInput}
