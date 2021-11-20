@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.scss";
-const simplifyFloat = (x) => parseFloat(x.toFixed(2));
+const simplifyFloat = (x, sf = 2) => parseFloat(x.toFixed(sf));
 const useInput = ({ label, defaultValue = "", placeholder, min, max }) => {
   const [value, setValue] = useState(defaultValue);
   const input = (
@@ -29,7 +29,11 @@ const useInput = ({ label, defaultValue = "", placeholder, min, max }) => {
 };
 export default function App() {
   const [batteryVoltageInput, batteryVoltage, setBatteryVoltage] = useInput({
-    label: "Voltage (Nominal) (V)",
+    label: (
+      <>
+        Voltage (V) <small>- Nominal</small>
+      </>
+    ),
     placeholder: "3.7",
     min: 0,
   });
@@ -57,9 +61,14 @@ export default function App() {
     min: 0,
   });
   const [deviceEfficiencyInput, deviceEfficiency] = useInput({
-    label: "Efficiency (%)",
-    placeholder: "80",
-    defaultValue: 80,
+    label: (
+      <>
+        Efficiency (%){" "}
+        <small>- of battery/converters/capacity ratings...</small>
+      </>
+    ),
+    placeholder: "70%",
+    defaultValue: 70,
     min: 0,
     max: 100,
   });
@@ -74,7 +83,7 @@ export default function App() {
       : batteryLife < 1
       ? simplifyFloat(batteryLife * 60) + "  minutes"
       : batteryLife > 24
-      ? Math.ceil(batteryLife / 24) + "  days"
+      ? simplifyFloat(batteryLife / 24, 1) + "  days"
       : simplifyFloat(batteryLife) + "  hours";
   //
   //
@@ -227,6 +236,16 @@ export default function App() {
             <figure>T = Wh / W * Efficiency</figure>
           </div>
         </div>
+        <aside>
+          This will be inaccurate because:
+          <ul>
+            <li>
+              Battery capacity changes with discharge rate and temperature
+            </li>
+            <li>Vendors over estimate capacity</li>
+          </ul>
+          But an Efficiency of 70% tries to account for it.
+        </aside>
       </fieldset>
     </main>
   );
