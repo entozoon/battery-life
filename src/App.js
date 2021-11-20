@@ -98,17 +98,6 @@ export default function App() {
         <fieldset>
           <legend>Battery</legend>
           <div className="field">
-            <label>Presets:</label>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setBatteryVoltage(3.6);
-                setBatteryAh(2.5);
-                setBatteryDischarge(40);
-              }}
-            >
-              18650 (4.2↓2.5v)
-            </button>
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -118,6 +107,16 @@ export default function App() {
               }}
             >
               LiPo Small (4.2↓3v)
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setBatteryVoltage(3.6);
+                setBatteryAh(2.5);
+                setBatteryDischarge(40);
+              }}
+            >
+              18650 (4.2↓2.5v)
             </button>
             <button
               onClick={(e) => {
@@ -149,7 +148,6 @@ export default function App() {
         <fieldset>
           <legend>Device</legend>
           <div className="field">
-            <label>Presets:</label>
             <button
               onClick={(e) => {
                 e.preventDefault();
