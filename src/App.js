@@ -243,8 +243,9 @@ export default function App() {
               Battery capacity changes with discharge rate and temperature
             </li>
             <li>Vendors over estimate capacity</li>
+            <li>Self-discharge rates e.g. 2%/mo</li>
           </ul>
-          But an Efficiency of 70% tries to account for it.
+          But an Efficiency of 70% tries to account for it all.
         </aside>
       </fieldset>
     </main>
