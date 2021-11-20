@@ -129,11 +129,6 @@ export default function App() {
             >
               LiPo Large (4.2↓3v)
             </button>
-            <p>
-              NOTE: TP4056 discharge protection should not be relied on for
-              LiPo, as it cuts off real low at 2.4v. Li-ion is safer, but check
-              specs of any BMS.
-            </p>
           </div>
           {batteryVoltageInput}
           {batteryAhInput}
@@ -215,6 +210,11 @@ export default function App() {
               </figure>
             </div>
           </div>
+          <aside>
+            NOTE: TP4056 discharge protection should not be relied on for LiPo,
+            as it cuts off real low at 2.4v. Li-ion is safer, but check specs of
+            any BMS.
+          </aside>
         </fieldset>
       </form>
       <fieldset className="output">

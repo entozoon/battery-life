@@ -1,19 +1,26 @@
 $brand-1: #522;
 $brand-2: #34686e;
 $brand-3: #3b2255;
-$breakpoint: 1200px;
+$breakpoint-min: 768px;
+$breakpoint-max: 1240px;
 body {
   font-family: verdana, tahoma;
-  font-size: 20px;
   margin: 0.5em;
   background: black;
+  font-size: 16px;
+  @media (min-width: $breakpoint-min) {
+    font-size: calc(1.5vw - 0px);
+  }
+  @media (min-width: $breakpoint-max) {
+    font-size: 18px;
+  }
 }
 main {
   max-width: 1600px;
   margin: auto;
 }
 form {
-  @media (min-width: $breakpoint) {
+  @media (min-width: $breakpoint-min) {
     display: flex;
     justify-content: center;
   }
@@ -24,14 +31,14 @@ form {
 }
 fieldset {
   position: relative;
-  padding: 4em 2em 2em;
-  max-width: 30em;
+  padding: 1em;
   margin: 0.5em auto;
   border: 0;
   background: darken($brand-1, 2%);
   border: 10px outset lighten($brand-1, 15%);
-  @media (min-width: $breakpoint) {
+  @media (min-width: $breakpoint-min) {
     width: 50%;
+    max-width: 30em;
     margin-left: 0.5em;
     margin-right: 0.5em;
   }
@@ -49,6 +56,7 @@ fieldset {
 }
 legend,
 label {
+  font-size: inherit;
   text-shadow: 0 0 1px darken($brand-1, 20%), 0 0 2px darken($brand-1, 20%);
 }
 legend {
@@ -135,17 +143,13 @@ label {
   justify-content: flex-start;
   align-items: center;
 }
+aside,
 figure {
-  flex-grow: 1;
-  max-width: 14em;
-  margin: 0.5em;
-  padding: 0 1em;
-  text-align: right;
   $hatch: 0.1em;
-  // border-radius: 0 3em 0 0 0 0 0 0;
-  // border-top-left-radius: 1em 3em;
-  // clip: polygon(2em 0, 100% 0, 100% 100%, 0 100%, 0 50%);
-  clip-path: polygon(100% 0%, 100% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+  flex-grow: 1;
+  padding: 0.5em;
+  margin: 0.5em;
+  font-size: 0.8em;
   background: repeating-linear-gradient(
     -60deg,
     transparent,
@@ -153,6 +157,14 @@ figure {
     rgba(white, 0.1) $hatch,
     rgba(white, 0.1) $hatch * 2
   );
+}
+figure {
+  max-width: 14em;
+  text-align: right;
+  // border-radius: 0 3em 0 0 0 0 0 0;
+  // border-top-left-radius: 1em 3em;
+  // clip: polygon(2em 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+  clip-path: polygon(100% 0%, 100% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
 }
 button {
   cursor: pointer;
